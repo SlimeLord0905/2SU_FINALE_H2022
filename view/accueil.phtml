@@ -19,24 +19,17 @@
             foreach ($shweets as $shweet)
             {
                 echo "<div>
-            <div>
-                <img src=".$avatar[$utilisateur[$shweet->getAuteur()-1]->getAvatarId()-1]->getUrl()." alt='N.D.' width='75' height='75'>
-                <a href='index.php?ctrl=default&amp;action=afficherProfil&amp;id=1'>tremblayj</a>
-                <p class='petit-texte'>Publié le 2022-04-21 à 13:56:30</p>
-                <div>
-                    <div>
-                        <p>
-                            J'ai les réponse de tout les examen                                                            </p>
-                    </div>
-                                                <hr style='border: 1px dashed black;'>
-                        <div id='40' align='right'>
-                            <img src='img/avatar2.jpg' alt='N.D.' width='50' height='50'>
-                            <a href='index.php?ctrl=default&amp;action=afficherProfil&amp;id=1'>tremblayj </a>
-                            la réponse est 42                                                            </div>
-                    
-                                            </div>
-                </div>
-            </div>";
+                        <div>
+                            <img src=".$avatar[($shweet->getAuteur()->getAvatarId())-1]->getUrl()." alt='N.D.' width='75' height='75'>
+                            <a href='index.php?ctrl=default&amp;action=afficherProfil&amp;id=1'>".$shweet->getAuteur()->getUsername()."</a>
+                            <p class='petit-texte'>Publié le ". $shweet->getDateCreation() ."</p>
+                            <div>
+                                <div>
+                                    <p>". $shweet->gettexte()."</p>
+                                </div>
+                                                            <hr style='border: 1px dashed black;'>
+                            </div>
+                        </div>";
             }
             ?>
         </div>
