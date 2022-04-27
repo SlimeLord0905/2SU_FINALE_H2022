@@ -24,7 +24,7 @@ class ControllerDefault extends Controller
     {
         $shweets = $this->ShweetRepo->selectDernierShweetParent(0);
         $vue = new ViewCreator("view/accueil.phtml");
-        $vue->assign("blogues", $shweets);
+        $vue->assign("shweets", $shweets);
         echo $vue->render();
     }
 

@@ -13,15 +13,33 @@
 
     <div id="contenu">
         <?php require_once 'section/retroaction.phtml'; ?>
+        <div style="width: 70%; margin-left:auto ;margin-right:auto ;">
 
-
-        <?php
-        foreach ($shweets as $shweet)
-        {
-            echo '<li><a href="index.php?ctrl=blogue&action=consulter&idblogue=' . $blogue->getId() . '">' . $blogue->getTexte() . '</a></li>';
-        }
-        ?>
-
+            <?php
+            foreach ($shweets as $shweet)
+            {
+                echo "<div>
+            <div>
+                <img src=".$avatar[$utilisateur[$shweet->getAuteur()-1]-> getAvatarId()-1]." alt='N.D.' width='75' height='75'>
+                <a href='index.php?ctrl=default&amp;action=afficherProfil&amp;id=1'>tremblayj</a>
+                <p class='petit-texte'>Publié le 2022-04-21 à 13:56:30</p>
+                <div>
+                    <div>
+                        <p>
+                            J'ai les réponse de tout les examen                                                            </p>
+                    </div>
+                                                <hr style='border: 1px dashed black;'>
+                        <div id='40' align='right'>
+                            <img src='img/avatar2.jpg' alt='N.D.' width='50' height='50'>
+                            <a href='index.php?ctrl=default&amp;action=afficherProfil&amp;id=1'>tremblayj </a>
+                            la réponse est 42                                                            </div>
+                    
+                                            </div>
+                </div>
+            </div>";
+            }
+            ?>
+        </div>
     </div>
 
     <?php require_once 'section/pied.phtml'; ?>

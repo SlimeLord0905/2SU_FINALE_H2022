@@ -20,7 +20,7 @@ class ShweetModelRepository extends ModelRepository
     function selectAll() //: array
     {
         $_requete = "SELECT * FROM shweet ";
-        
+
 
         $requete = $this->connexion->prepare($_requete);
         $requete->execute();
@@ -39,7 +39,7 @@ class ShweetModelRepository extends ModelRepository
     {
         if ($id != 0)
         {
-            $requete = $this->connexion->prepare("SELECT * FROM shweet WHERE parent_id=:id LIMIT lalimit");
+            $requete = $this->connexion->prepare("SELECT * FROM shweet WHERE parent_id=:id LIMIT 20");
             $requete->bindValue(":id", $id);
             $requete->bindValue("lalimit", $limit);
             $requete->execute();
@@ -47,7 +47,7 @@ class ShweetModelRepository extends ModelRepository
         else
         {
 
-            $requete = $this->connexion->prepare("SELECT * FROM shweet WHERE parent_id IS NULL ");
+            $requete = $this->connexion->prepare("SELECT * FROM shweet WHERE parent_id IS NULL LIMIT 20");
             $requete->bindValue("lalimit", $limit);
             $requete->execute();
         }
@@ -58,6 +58,21 @@ class ShweetModelRepository extends ModelRepository
 
         return $shweets;
     }
+    function selectenfant() //: ?array()
+    {
+
+
+        $requete = $this->connexion->prepare("SELECT * FROM shweet WHERE parent_id IS NOT NULL ");
+        $requete->execute();
+
+
+        $shweets = array();
+        while ($record = $requete->fetch())
+            $shweets[] = $this->constructshweetFromRecord($record);
+
+        return $shweets;
+    }
+
 
 
     function insert(Shweet $shweet) //:?int
