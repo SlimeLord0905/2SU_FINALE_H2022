@@ -23,8 +23,14 @@ class ControllerDefault extends Controller
     function consulter()
     {
         $shweets = $this->ShweetRepo->selectDernierShweetParent(0);
+        $shweetskids = $this->ShweetRepo->selectenfant();
+        $avatars = $this->avatarrepository->SelectAll();
+        $users = $this->utilisateurRepo->selectAll();
         $vue = new ViewCreator("view/accueil.phtml");
         $vue->assign("shweets", $shweets);
+        $vue->assign("enfants", $shweetskids);
+        $vue->assign("utilisateur", $users);
+        $vue->assign("avatar", $avatars);
         echo $vue->render();
     }
 

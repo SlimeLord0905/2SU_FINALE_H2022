@@ -50,7 +50,7 @@ class Avatar
 
     public function setUrl(string $url): self
     {
-        if (filter_var($url, FILTER_SANITIZE_URL) || (strlen($url) > 255))
+        if (!filter_var($url, FILTER_SANITIZE_URL) || (strlen($url) > 255))
             throw new Exception("Le contenu de votre url ' $url' doit être de moins de 255 caractères.");
 
         $this->url = $url;

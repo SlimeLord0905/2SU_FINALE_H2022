@@ -38,6 +38,6 @@ class AvatarModelRepository extends ModelRepository
 
     private function constructAvatarFromRecord($record): ?Avatar
     {
-        return new Avatar($record['id'], $record['cheminage']);
+        return new Avatar($record['id'], $record['cheminImage']);
     }
 }
