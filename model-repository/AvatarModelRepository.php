@@ -3,12 +3,12 @@
 
 class AvatarModelRepository extends ModelRepository
 {
-    private ModelRepositoryConfig $config;
+    protected ModelRepositoryConfig $config;
     
     public function __construct(ModelRepositoryConfig $config)
     {
         $this->Config = $config;
-
+        parent::__construct($config);
     }
     function SelectAll()
     {

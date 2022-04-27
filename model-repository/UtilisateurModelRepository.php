@@ -1,21 +1,22 @@
 <?php
 
-
 class UtilisateurModelRepository extends ModelRepository
 {
-    private ModelRepositoryConfig $config;
-    private AvatarModelRepository $AvatarRepository;
+    protected ModelRepositoryConfig $onfig;
+    protected AvatarModelRepository $AvatarRepository;
 
     public function __construct(ModelRepositoryConfig $config, AvatarModelRepository $AvatarRepository)
     {
-        $this->Config = $config;
+        parent::__construct($config);
+        $this->config = $config;
         $this->AvatarRepository = $AvatarRepository;
     }
 
 
     public function selectAll(): array
     {
-        $requete = $this->connexion->prepare("SELECT * FROM utilisateur");
+        $s_requete= "SELECT * FROM utilisateur";
+        $requete = $this->connexion->prepare("$s_requete");
         $requete->execute();
 
         $utilisateurs = array();

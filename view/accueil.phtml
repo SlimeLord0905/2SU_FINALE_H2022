@@ -14,7 +14,14 @@
     <div id="contenu">
         <?php require_once 'section/retroaction.phtml'; ?>
 
-        En développement...
+
+        <?php
+        foreach ($shweets as $shweet)
+        {
+            echo '<li><a href="index.php?ctrl=blogue&action=consulter&idblogue=' . $blogue->getId() . '">' . $blogue->getTexte() . '</a></li>';
+        }
+        ?>
+
     </div>
 
     <?php require_once 'section/pied.phtml'; ?>

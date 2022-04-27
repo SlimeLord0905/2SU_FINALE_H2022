@@ -12,7 +12,7 @@ class Utilisateur
     private int $avatar_id;
 
 
-    public function __construct(string $username, string $localisation, string $hash, string $bio, string $url, int $id = 0, DateTime $dtrejoint,int $avatar_id = 0)
+    public function __construct(string $username, string $localisation, string $hash, string $bio, string $url, int $id = 0,int $avatar_id = 0)
     {
         $this->setId($id);
         $this->setBio($bio);
@@ -20,7 +20,6 @@ class Utilisateur
         $this->setUsername($username);
         $this->setLocalisation($localisation);
         $this->setHash($hash);
-        $this->setDtrejoint($dtrejoint);
         $this->setAvatarId($avatar_id);
     }
 
@@ -58,6 +57,7 @@ class Utilisateur
 
     public function setBio(string $bio): self
     {
+
         if (strlen($bio) > 255)
             throw new Exception("Le contenu de votre bio '$bio 'doit être de moins de 255 caractères.");
 
@@ -73,7 +73,7 @@ class Utilisateur
 
     public function setUrl(string $url): self
     {
-        if (filter_var($url, FILTER_SANITIZE_URL)||(strlen($url) > 255))
+        if (!filter_var($url, FILTER_SANITIZE_URL)||(strlen($url) > 255))
             throw new Exception("Le contenu de votre url ' $url' doit être de moins de 255 caractères.");
 
         $this->url = $url;

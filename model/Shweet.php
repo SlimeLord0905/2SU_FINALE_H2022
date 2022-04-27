@@ -5,17 +5,17 @@ class Shweet{
 
     private int $id;
     private string $texte;
-    private ?DateTime $dateCreation;
+    private string $dateCreation;
     private Utilisateur $auteur;
-    private int $parent_id;
+    private  $parent_id;
 
 
     public function __construct(
-        string $texte,
-        Utilisateur $auteur,
-        ?DateTime $dateCreation = null,
         int $id = 0,
-        int $parent_id
+        string $texte,
+        string $dateCreation = null,
+        Utilisateur $auteur,
+        $parent_id
     )
     {
         $this->setId($id);
@@ -83,19 +83,13 @@ class Shweet{
      *
      * @return ?DateTime
      */
-    public function getDateCreation(): ?DateTime
+    public function getDateCreation(): ?string
     {
         return $this->dateCreation;
     }
 
-    /**
-     * Set the value of dateCreation
-     *
-     * @param ?DateTime $dateCreation
-     *
-     * @return self
-     */
-    public function setDateCreation(?DateTime $dateCreation): self
+   
+    public function setDateCreation(string $dateCreation): self
     {
         $this->dateCreation = $dateCreation;
 
@@ -147,7 +141,7 @@ class Shweet{
      *
      * @return self
      */
-    public function setParent(int $parent_id): self
+    public function setParent($parent_id): self
     {
         $this->parent_id = $parent_id;
 

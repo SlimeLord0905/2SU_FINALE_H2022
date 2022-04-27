@@ -3,12 +3,13 @@
 
 class ShweetModelRepository extends ModelRepository
 {
-    private UtilisateurModelRepository $utilisateurRepository;
-    private AvatarModelRepository $AvatarRepository;
-    private ModelRepositoryConfig $config;
+    protected UtilisateurModelRepository $utilisateurRepository;
+    protected AvatarModelRepository $AvatarRepository;
+    protected ModelRepositoryConfig $config;
 
     public function __construct(ModelRepositoryConfig $config, AvatarModelRepository $AvatarRepository, UtilisateurModelRepository $UtilisateurRepository)
     {
+        parent::__construct($config);
         $this->Config = $config;
         $this->AvatarRepository = $AvatarRepository;
         $this->utilisateurRepository = $UtilisateurRepository;
@@ -18,25 +19,42 @@ class ShweetModelRepository extends ModelRepository
 
     function selectAll() //: array
     {
-        $requete = $this->connexion->prepare("SELECT * FROM shweet WHERE parent_id IS NULL");
+        $_requete = "SELECT * FROM shweet ";
+        
+
+        $requete = $this->connexion->prepare($_requete);
         $requete->execute();
+
+        $articles = array();
+        while ($record = $requete->fetch())
+        {
+            $article = $this->constructshweetFromRecord($record);
+            if ($article != null)
+                $articles[] = $article;
+        }
+
+        return $articles;
+    }
+    function selectDernierShweetParent(int $id, int $limit = 20) //: ?array()
+    {
+        if ($id != 0)
+        {
+            $requete = $this->connexion->prepare("SELECT * FROM shweet WHERE parent_id=:id LIMIT lalimit");
+            $requete->bindValue(":id", $id);
+            $requete->bindValue("lalimit", $limit);
+            $requete->execute();
+        }
+        else
+        {
+
+            $requete = $this->connexion->prepare("SELECT * FROM shweet WHERE parent_id IS NULL ");
+            $requete->bindValue("lalimit", $limit);
+            $requete->execute();
+        }
 
         $shweets = array();
         while ($record = $requete->fetch())
             $shweets[] = $this->constructshweetFromRecord($record);
-
-        return $shweets;
-    }
-    function selectDernierShweetParent(int $limit = 20, int $id) //: ?array()
-    {
-        $requete = $this->connexion->prepare("SELECT * FROM shweet WHERE id=:id LIMIT :limit");
-        $requete->bindValue(":id", $id);
-        $requete->bindValue(":limit", $limit);
-        $requete->execute();
-
-        $shweets = array();
-        while ($record = $requete->fetch())
-            $utilisateur[] = $this->constructshweetFromRecord($record);
 
         return $shweets;
     }
@@ -89,7 +107,7 @@ class ShweetModelRepository extends ModelRepository
             $record['id'],
             $record['texte'],
             $record['dateCreation'],
-            $record['auteur_id'],
+            $this->utilisateurRepository->select($record['auteur_id']),
             $record['parent_id']
         );
     }

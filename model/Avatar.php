@@ -1,7 +1,7 @@
 <?php
 
 
-class avatar_id
+class Avatar
 {
     private int $id;
     private string $url;
@@ -13,13 +13,12 @@ class avatar_id
     {
         $this->setId($id);
         $this->setUrl($url);
-        
     }
 
 
 
 
-   /**
+    /**
      * Get the value of id
      *
      * @return int
@@ -51,7 +50,7 @@ class avatar_id
 
     public function setUrl(string $url): self
     {
-        if (filter_var($url, FILTER_SANITIZE_URL)||(strlen($url) > 255))
+        if (filter_var($url, FILTER_SANITIZE_URL) || (strlen($url) > 255))
             throw new Exception("Le contenu de votre url ' $url' doit être de moins de 255 caractères.");
 
         $this->url = $url;

@@ -1,13 +1,14 @@
 <?php
+
 /**
- * Contrôleur par défaut. Il permet d'afficher la page d'accueil.
+ * Contrôleur pour la gestion des blogues 
  */
-class ControllerDefault extends Controller
+class ControllerShweet extends Controller
 {
     private UtilisateurModelRepository $utilisateurRepo;
     private AvatarModelRepository $avatarrepository;
     private ShweetModelRepository $ShweetRepo;
-
+    private ViewCreator $vue;
  
 
     function __construct(ModelRepositoryConfig $config)
@@ -25,6 +26,8 @@ class ControllerDefault extends Controller
         $shweets = $this->ShweetRepo->selectDernierShweetParent(0);
         $vue = new ViewCreator("view/accueil.phtml");
         $vue->assign("blogues", $shweets);
+        $vue->assign("utilisateur", $this->utilisateurRepo);
+        $vue->assign("avatar", $this->avatarrepository);
         echo $vue->render();
     }
 
@@ -32,4 +35,7 @@ class ControllerDefault extends Controller
     {
         $this->consulter();
     }
+
+
+    
 }
