@@ -18,18 +18,38 @@
             <?php
             foreach ($shweets as $shweet)
             {
-                echo "<div>
+                echo "
                         <div>
-                            <img src=".$avatar[($shweet->getAuteur()->getAvatarId())-1]->getUrl()." alt='N.D.' width='75' height='75'>
+                            <img src=".$shweet->getAuteur()->getAvatar()->getUrl()." alt='N.D.' width='75' height='75'>
                             <a href='index.php?ctrl=default&amp;action=afficherProfil&amp;id=1'>".$shweet->getAuteur()->getUsername()."</a>
                             <p class='petit-texte'>Publié le ". $shweet->getDateCreation() ."</p>
                             <div>
                                 <div>
                                     <p>". $shweet->gettexte()."</p>
                                 </div>
-                                                            <hr style='border: 1px dashed black;'>
+                                <div class='kids'>";
+                                    foreach($enfants as $enfant)
+                                    {
+                                        if($enfant->getParent() == $shweet->getId())
+                                        {
+                                            echo"
+                                            <div class='kids'>
+                                                <img src=".$enfant->getAuteur()->getAvatar()->getUrl()." alt='N.D.' width='75' height='75'>
+                                                <a href='index.php?ctrl=default&amp;action=afficherProfil&amp;id=1'>".$enfant->getAuteur()->getUsername()."</a>
+                                                <p class='petit-texte'>Publié le ". $enfant->getDateCreation() ."</p>
+                                                <p>". $enfant->gettexte()."</p>
+                                            </div>
+                                            <hr style='border: 1px dashed black;'>";
+                                        }
+
+
+                                    }
+                                 echo"
+                                 </div>
+                                 <div class='border'></div>
                             </div>
-                        </div>";
+                        </div>
+                    ";
             }
             ?>
         </div>

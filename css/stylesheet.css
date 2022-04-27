@@ -15,7 +15,7 @@
 }
 
 #menu {
-    background-color: blue;
+    background-color: lightblue;
     text-align: left;
 }
 
@@ -39,4 +39,14 @@ td {
     display: block;
     padding: 4px 2px;
     margin: 2px 0 20px 10px;
+}
+.kids{
+    width: 70%;
+    margin-left: auto;
+    margin-right: 0px;
+    text-align: left;
+}
+.border{
+    height: 5px;
+    background-color: black;
 }

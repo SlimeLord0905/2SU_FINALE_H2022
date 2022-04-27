@@ -79,7 +79,7 @@ class UtilisateurModelRepository extends ModelRepository
             $record['url'],
             $record['id'],
             $record['aRejointLe'],
-            $record['avatar_id']
+            $this->AvatarRepository->select($record['avatar_id'])
         );
     }
     

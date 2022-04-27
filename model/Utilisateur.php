@@ -8,19 +8,20 @@ class Utilisateur
     private string $username;
     private string $localisation;
     private string $hash;
-    private DateTime $dtrejoint;
-    private int $avatar_id;
+    private string$dtrejoint;
+    private Avatar $avatar;
 
 
-    public function __construct(string $username, string $localisation, string $hash, string $bio, string $url, int $id = 0,int $avatar_id = 0)
+    public function __construct(string $username, string $localisation, string $hash, string $bio, string $url, int $id = 0,string $date , Avatar $avatar)
     {
         $this->setId($id);
         $this->setBio($bio);
         $this->setUrl($url);
         $this->setUsername($username);
         $this->setLocalisation($localisation);
-        $this->setHash($hash);
-        $this->setAvatarId($avatar_id);
+        $this->setHash($hash); 
+        $this->setDtrejoint($date);
+        $this->setAvatar($avatar);
     }
 
     public function getId(): int
@@ -36,15 +37,15 @@ class Utilisateur
         return $this;
     }
 
-    public function getAvatarId(): int
+    public function getAvatar(): Avatar
     {
-        return $this->avatar_id;
+        return $this->avatar;
     }
 
 
-    public function setAvatarId(int $avatar_id): self
+    public function setAvatar(Avatar $avatar): self
     {
-        $this->avatar_id = $avatar_id;
+        $this->avatar = $avatar;
 
         return $this;
     }
@@ -125,16 +126,16 @@ class Utilisateur
         return $this;
     }
 
-    public function getDtrejoint(): DateTime
+    public function getDtrejoint(): string
     {
         return $this->dtrejoint;
     }
 
  
-    public function setDtrejoint(DateTime $dtrejoint): self
+    public function setDtrejoint(string $dtrejoint): self
     {
-        if (!filter_var($dtrejoint, FILTER_SANITIZE_FULL_SPECIAL_CHARS))
-            throw new Exception("La date '$dtrejoint' n'est pas formuler correctement.");
+        /*if (!filter_var($dtrejoint, FILTER_SANITIZE_FULL_SPECIAL_CHARS))
+            throw new Exception("La date '$dtrejoint' n'est pas formuler correctement.");*/
         $this->dtrejoint = $dtrejoint;
         return $this;
     }

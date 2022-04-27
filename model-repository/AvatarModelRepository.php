@@ -28,9 +28,11 @@ class AvatarModelRepository extends ModelRepository
         $requete->bindValue(":id", $id);
         $requete->execute();
 
-        $avatar = array();
-        while ($record = $requete->fetch())
-            $avatar[] = $this->constructAvatarFromRecord($record);
+        if ($record = $requete->fetch())
+        {
+            $avatar= $this->constructAvatarFromRecord($record);
+        }
+
 
         return $avatar;
     }
