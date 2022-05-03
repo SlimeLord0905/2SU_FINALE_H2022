@@ -38,8 +38,13 @@ class ControllerConnexion extends Controller
             $erreurs[] = "Combinaison nom utilisateur/mot de passe non valide.";
         }
 
-        $vue = new ViewCreator('view/accueil.phtml');
+        $vue = new ViewCreator('view/connexion.phtml');
         $vue->assign("erreurs", $erreurs);
+        echo $vue->render();
+    }
+    function Connectmenu()
+    {
+        $vue = new ViewCreator('view/connexion.phtml');
         echo $vue->render();
     }
 

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mon premier site web en php</title>
+    <link href="css/stylesheet.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <?php require_once 'section/entete.phtml'; ?>
+    <?php require_once 'section/menu.phtml'; ?>
+
+    <div id="contenu">
+        <?php require_once 'section/retroaction.phtml'; ?>
+        <div style="width: 70%; margin-left:auto ;margin-right:auto ;">
+
+        <div id="contenu">
+        <main class="form-inscription">
+            
+<div id="retroaction" class="sautligne">
+    </div>
+            <form id="formulaireInscription" method="post" action="index.php">
+                <h1>Inscription</h1>
+
+                <div>
+                    <label for="usernameid">Nom d'utilisateur</label>
+                    <input type="text" id="usernameid" name="username" placeholder="jtremblay" minlength="1" maxlength="50" required="">
+                </div>
+
+                <hr>
+
+                <div>
+                    <label for="passwordid">Mot de passe</label>
+                    <input type="password" id="passwordid" name="mdp" placeholder="Mot de passe..." minlength="5" required="">
+                </div>
+
+                <div>
+                    <label for="confirmpasswordid">Confirmation du mot de passe</label>
+                    <input type="password" id="confirmpasswordid" name="confirmerMdp" placeholder="Confirmer..." minlength="5" required="">
+
+                </div>
+
+                <hr>
+
+                <div>
+                    <label for="bioid">Bio</label>
+                    <input type="text" id="bioid" name="bio" placeholder="Votre bio..." minlength="10" maxlength="255" required="">
+                </div>
+
+                <div>
+                    <label for="localisationid">Localisation</label>
+                    <input type="text" id="localisationid" name="localisation" placeholder="Québec..." minlength="1" maxlength="100" required="">
+                </div>
+
+                <div>
+                    <label for="urlid">Url</label>
+                    <input type="text" class="form-control" id="urlid" name="url" placeholder="http://votresite.com">
+                </div>
+
+                <hr>
+
+                <p>Choix de l'avatar:</p>
+                                    <input type="radio" name="choix-avatar" value="1" checked=""> <img src="img/avatar1.jpg" width="50" height="50">
+                                    <input type="radio" name="choix-avatar" value="2"> <img src="img/avatar2.jpg" width="50" height="50">
+                                    <input type="radio" name="choix-avatar" value="3"> <img src="img/avatar3.png" width="50" height="50">
+                                    <input type="radio" name="choix-avatar" value="4"> <img src="img/avatar4.png" width="50" height="50">
+                                    <input type="radio" name="choix-avatar" value="5"> <img src="img/avatar5.jpg" width="50" height="50">
+                                    <input type="radio" name="choix-avatar" value="6"> <img src="img/avatar6.png" width="50" height="50">
+                
+                <hr>
+
+                <input type="hidden" name="ctrl" value="inscription">
+                <input type="hidden" name="action" value="creerProfil">
+                <button type="submit">S'inscrire</button>
+            </form>
+        </main>
+    </div>
+
+
+
+        <?php require_once 'section/pied.phtml'; ?>
+
+</body>
+<html>

@@ -15,7 +15,7 @@ class UtilisateurModelRepository extends ModelRepository
 
     public function selectAll(): array
     {
-        $s_requete= "SELECT * FROM utilisateur";
+        $s_requete = "SELECT * FROM utilisateur";
         $requete = $this->connexion->prepare("$s_requete");
         $requete->execute();
 
@@ -43,7 +43,7 @@ class UtilisateurModelRepository extends ModelRepository
 
         return $utilisateur;
     }
-    public function Insert(Utilisateur $user) : ?int
+    public function Insert(Utilisateur $user): ?int
     {
         $this->connexion->beginTransaction();
 
@@ -70,19 +70,24 @@ class UtilisateurModelRepository extends ModelRepository
 
     public function selectByUsernameAndHash($username, $hash)
     {
-        $s_requete= "SELECT * FROM utilisateur WHERE username = :username AND hash = :hash";
+        $s_requete = "SELECT * FROM utilisateur WHERE username = :username AND hash = :hash";
         $requete = $this->connexion->prepare("$s_requete");
         $requete->bindValue(":username", $username);
         $requete->bindValue(":hash", $hash);
         $requete->execute();
 
         if ($record = $requete->fetch());
-        $utilisateur = $this->constructUtilisateurFromRecord($record);
+        {
+            if ($record != null)
+            {
+                $utilisateur = $this->constructUtilisateurFromRecord($record);
+            }
+        }
 
         return $utilisateur;
     }
 
-s
+
     private function constructUtilisateurFromRecord($record): ?Utilisateur
     {
         return new Utilisateur(
@@ -96,5 +101,4 @@ s
             $this->AvatarRepository->select($record['avatar_id'])
         );
     }
-    
 }

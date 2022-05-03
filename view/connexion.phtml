@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mon premier site web en php</title>
+    <link href="css/stylesheet.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <?php require_once 'section/entete.phtml'; ?>
+    <?php require_once 'section/menu.phtml'; ?>
+
+    <div id="contenu">
+        <?php require_once 'section/retroaction.phtml'; ?>
+        <div style="width: 70%; margin-left:auto ;margin-right:auto ;">
+    <div id="contenu">
+
+
+        <main class="form-signin">
+
+            <div id="retroaction" class="sautligne">
+            </div>
+            <form method="post" action="index.php">
+                <h1>Connexion</h1>
+
+                <div>
+                    <label for="floatingInput">Nom d'utilisateur</label>
+                    <input type="text" id="floatingInput" name="username" placeholder="jtremblay">
+                </div>
+
+                <div>
+                    <label for="floatingPassword">Mot de passe</label>
+                    <input type="password" id="floatingPassword" name="mdp" placeholder="Mot de passe...">
+                </div>
+
+                <input type="hidden" name="ctrl" value="connexion">
+                <input type="hidden" name="action" value="seConnecter">
+
+                <button type="submit">Se connecter</button>
+            </form>
+        </main>
+    </div>
+
+    <?php require_once 'section/pied.phtml'; ?>
+
+</body>
+<html>

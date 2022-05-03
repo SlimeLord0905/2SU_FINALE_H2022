@@ -49,36 +49,21 @@ class ControllerShweet extends Controller
         $texte = filter_input(INPUT_POST, 'texte', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $auteurid = 1;
         $parent_id = ($_REQUEST['parent_id']) ;
-        $localisation = ($_REQUEST['localisation']);
 
         $this->ShweetRepo->insert($texte,$auteurid,$parent_id);
-        
-        if($localisation == 2)
-        {
-            //$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-            $shweets = $this->ShweetRepo->selectDernierShweetParent($auteurid);
-            $shweetskids = $this->ShweetRepo->selectenfant();
-            $User = $this->utilisateurRepo->select($auteurid);
 
-            $vue = new ViewCreator("view/accueil.phtml");
-            $vue->assign("shweets", $shweets);
-            $vue->assign("enfants", $shweetskids);
-            $vue->assign("utilisateur", $User);
-            echo $vue->render();
-        }
-        else
-        {
-            $id = filter_input(INPUT_GET, 'user', FILTER_SANITIZE_NUMBER_INT);
-            $shweets = $this->ShweetRepo->selectDernierShweetParent($id);
-            $shweetskids = $this->ShweetRepo->selectenfant();
-            $User = $this->utilisateurRepo->select($id);
-    
-            $vue = new ViewCreator("view/page.phtml");
-            $vue->assign("shweets", $shweets);
-            $vue->assign("enfants", $shweetskids);
-            $vue->assign("utilisateur", $User);
-            echo $vue->render();
-        }
+  
+        //$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+        $shweets = $this->ShweetRepo->selectDernierShweetParent($auteurid);
+        $shweetskids = $this->ShweetRepo->selectenfant();
+        $User = $this->utilisateurRepo->select($auteurid);
+
+        $vue = new ViewCreator("view/accueil.phtml");
+        $vue->assign("shweets", $shweets);
+        $vue->assign("enfants", $shweetskids);
+        $vue->assign("utilisateur", $User);
+        echo $vue->render();
+        
     }
     
 
