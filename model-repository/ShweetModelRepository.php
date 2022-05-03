@@ -5,7 +5,7 @@ class ShweetModelRepository extends ModelRepository
 {
     protected UtilisateurModelRepository $utilisateurRepository;
     protected AvatarModelRepository $AvatarRepository;
-    protected ModelRepositoryConfig $config;
+
 
     public function __construct(ModelRepositoryConfig $config, AvatarModelRepository $AvatarRepository, UtilisateurModelRepository $UtilisateurRepository)
     {
@@ -39,16 +39,14 @@ class ShweetModelRepository extends ModelRepository
     {
         if ($id != 0)
         {
-            $requete = $this->connexion->prepare("SELECT * FROM shweet WHERE parent_id=:id LIMIT 20");
+            $requete = $this->connexion->prepare("SELECT * FROM shweet WHERE auteur_id=:id LIMIT 20");
             $requete->bindValue(":id", $id);
-            $requete->bindValue("lalimit", $limit);
             $requete->execute();
         }
         else
         {
 
             $requete = $this->connexion->prepare("SELECT * FROM shweet WHERE parent_id IS NULL LIMIT 20");
-            $requete->bindValue("lalimit", $limit);
             $requete->execute();
         }
 
@@ -75,7 +73,7 @@ class ShweetModelRepository extends ModelRepository
 
 
 
-    function insert(Shweet $shweet) //:?int
+    function insert($texte,$auteur,$parent) //:?int
     {
         $this->connexion->beginTransaction();
 
@@ -83,9 +81,9 @@ class ShweetModelRepository extends ModelRepository
             "INSERT INTO shweet(texte, auteur_id, parent_id) " .
                 " VALUE(:texte,:auteur_id,:parent_id)"
         );
-        $requete->bindValue(":texte", $shweet->getTexte());
-        $requete->bindValue(":auteur_id", $shweet->getAuteur());
-        $requete->bindValue(":parent_id", $shweet->getParent());
+        $requete->bindValue(":texte", $texte);
+        $requete->bindValue(":auteur_id", $auteur);
+        $requete->bindValue(":parent_id", $parent);
 
         $requete->execute();
 
@@ -93,7 +91,6 @@ class ShweetModelRepository extends ModelRepository
 
         $this->connexion->commit();
 
-        $shweet->setId($id);
         return $id;
     }
 

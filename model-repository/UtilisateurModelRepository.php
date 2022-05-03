@@ -2,7 +2,7 @@
 
 class UtilisateurModelRepository extends ModelRepository
 {
-    protected ModelRepositoryConfig $onfig;
+
     protected AvatarModelRepository $AvatarRepository;
 
     public function __construct(ModelRepositoryConfig $config, AvatarModelRepository $AvatarRepository)
@@ -68,7 +68,21 @@ class UtilisateurModelRepository extends ModelRepository
         return $id;
     }
 
+    public function selectByUsernameAndHash($username, $hash)
+    {
+        $s_requete= "SELECT * FROM utilisateur WHERE username = :username AND hash = :hash";
+        $requete = $this->connexion->prepare("$s_requete");
+        $requete->bindValue(":username", $username);
+        $requete->bindValue(":hash", $hash);
+        $requete->execute();
 
+        if ($record = $requete->fetch());
+        $utilisateur = $this->constructUtilisateurFromRecord($record);
+
+        return $utilisateur;
+    }
+
+s
     private function constructUtilisateurFromRecord($record): ?Utilisateur
     {
         return new Utilisateur(

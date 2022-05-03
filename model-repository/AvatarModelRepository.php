@@ -3,7 +3,7 @@
 
 class AvatarModelRepository extends ModelRepository
 {
-    protected ModelRepositoryConfig $config;
+
     
     public function __construct(ModelRepositoryConfig $config)
     {

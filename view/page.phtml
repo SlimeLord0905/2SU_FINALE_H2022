@@ -14,14 +14,48 @@
     <div id="contenu">
         <?php require_once 'section/retroaction.phtml'; ?>
         <div style="width: 70%; margin-left:auto ;margin-right:auto ;">
+            <div>
+                <img src=<?php echo $utilisateur->getAvatar()->getUrl() ?> alt="N.D." width="200" height="200">
+                <h4><?php echo $utilisateur->getUsername() ?> </h4>
+                <p><?php echo $utilisateur->getBio() ?> </p>
+                <table>
+                    <tbody>
 
+                        <tr>
+                            <td><strong>LOCALISATION:</strong></td>
+                            <td>
+                                <p><?php echo $utilisateur->getLocalisation() ?> </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>A REJOINT LE:</strong></td>
+                            <td>
+                                <p><?php echo $utilisateur->getDtrejoint() ?></p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class='border'></div>
+            <form id="formulaireShweetter" method="post" action="index.php">
+                <div>
+                    <textarea name="texte" id="post-field" class="post-field" placeholder="Écris un Shweet!" minlength="1" maxlength="255" required=""></textarea>
+                    <div>
+                        <input type="hidden" name="ctrl" value="shweet">
+                        <input type="hidden" name="action" value="shweetter">
+                        <button class="btn btn-success px-4 py-1">Shwitter!!!</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class='border'></div>
             <?php
             foreach ($shweets as $shweet)
             {
                 echo "
                         <div>
                             <img src=" . $shweet->getAuteur()->getAvatar()->getUrl() . " alt='N.D.' width='75' height='75'>
-                            <a href='index.php?ctrl=page&action=afficherProfil&id=" . $shweet->getAuteur()->getId() . "'>" . $shweet->getAuteur()->getUsername() . "</a>
+                            <a href='index.php?ctrl=Page&action=afficherProfil&id=" . $shweet->getId() . "'>" . $shweet->getAuteur()->getUsername() . "</a>
                             <p class='petit-texte'>Publié le " . $shweet->getDateCreation() . "</p>
                             <div>
                                 <div>
@@ -36,7 +70,7 @@
                         echo "
                                             <div class='kids'>
                                                 <img src=" . $enfant->getAuteur()->getAvatar()->getUrl() . " alt='N.D.' width='75' height='75'>
-                                                <a href='index.php?ctrl=Page&action=afficherProfil&id=" . $enfant->getAuteur()->getId() . "'>" . $enfant->getAuteur()->getUsername() . "</a>
+                                                <a href='index.php?ctrl=page&action=afficherProfil&id=" . $enfant->getId() . "'>" . $enfant->getAuteur()->getUsername() . "</a>
                                                 <p>" . $enfant->gettexte() . "</p>
                                             </div>
                                             <hr style='border: 1px dashed black;'>";
@@ -48,10 +82,11 @@
                                         <div class='post-comment' align='right'>
                                             <img src='img/avatar6.png' alt='kevindelaval' width='50' height='50'>
                                             <input type='text' class='form-control' name='texte' placeholder='Répondre...' minlength='1' maxlength='255' required=''>
-                                            <input type='hidden' name='parent_id' value=".$shweet->getId().">
+                                            <input type='hidden' name='parent_id' value=" . $shweet->getId() . ">
                                             <input type='hidden' name='ctrl' value='shweet'>
                                             <input type='hidden' name='action' value='commenter'>
-                                            <input type='hidden' name='localisation' value=2>
+                                            <input type='hidden' name='localisation' value=1>
+                                            <input type='hidden' name='user' value=". $utilisateur->getId() .">
                                             <button class='btn btn-success px-4 py-1'>Commenter</button>
                                         </div>
                                     </form>
