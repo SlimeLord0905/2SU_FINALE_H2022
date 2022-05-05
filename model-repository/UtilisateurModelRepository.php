@@ -51,12 +51,12 @@ class UtilisateurModelRepository extends ModelRepository
             "INSERT INTO utilisateur(bio, localisation, url, username, hash, avatar_id) " .
                 " VALUE(:bio, :localisation, :url, :username, :hash, :avatar_id)"
         );
-        $requete->bindValue(":bio", $user->getID());
-        $requete->bindValue(":localisation", $user->getID());
-        $requete->bindValue(":url", $user->getID());
-        $requete->bindValue(":username", $user->getID());
-        $requete->bindValue(":hash", $user->getID());
-        $requete->bindValue(":avatar_id", $user->getID());
+        $requete->bindValue(":bio", $user->getBio());
+        $requete->bindValue(":localisation", $user->getLocalisation());
+        $requete->bindValue(":url", $user->getUrl());
+        $requete->bindValue(":username", $user->getUsername());
+        $requete->bindValue(":hash", $user->getHash());
+        $requete->bindValue(":avatar_id", $user->getAvatar()->getId());
 
         $requete->execute();
 

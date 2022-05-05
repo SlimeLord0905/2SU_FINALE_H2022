@@ -32,14 +32,15 @@ class ControllerConnexion extends Controller
         {
             $_SESSION['utilisateur'] = $utilisateur;
             $_SESSION['derniereActivite'] = time();
+            $succes = "vous êtes connecter";
         }
         else
         {
             $erreurs[] = "Combinaison nom utilisateur/mot de passe non valide.";
         }
-
         $vue = new ViewCreator('view/connexion.phtml');
         $vue->assign("erreurs", $erreurs);
+        $vue->assign("info", $succes);
         echo $vue->render();
     }
     function Connectmenu()
