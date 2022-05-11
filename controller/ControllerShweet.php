@@ -22,6 +22,7 @@ class ControllerShweet extends Controller
     function shweeter()
     {
         $texte = filter_input(INPUT_POST, 'texte', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $origine = filter_input(INPUT_POST, 'profil-origine-id', FILTER_SANITIZE_NUMBER_INT);
         $session =  $_SESSION['utilisateur'];
         $auteurid = $session->getid();
         $parent_id = null;
@@ -29,9 +30,10 @@ class ControllerShweet extends Controller
         $this->ShweetRepo->insert($texte, $session->getId(), $parent_id);
 
         //$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-        $shweets = $this->ShweetRepo->selectDernierShweetParent($auteurid);
+        
+        $shweets = $this->ShweetRepo->selectDernierShweetParent($origine);
         $shweetskids = $this->ShweetRepo->selectenfant();
-        $User = $this->utilisateurRepo->select($auteurid);
+        $User = $this->utilisateurRepo->select($origine);
 
         $vue = new ViewCreator("view/page.phtml");
         $vue->assign("shweets", $shweets);

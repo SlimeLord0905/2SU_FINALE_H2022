@@ -44,7 +44,8 @@
                     <textarea name="texte" id="post-field" class="post-field" placeholder="Écris un Shweet!" minlength="1" maxlength="255" required=""></textarea>
                     <div>
                         <input type="hidden" name="ctrl" value="shweet">
-                        <input type="hidden" name="action" value="shweetter">
+                        <input type="hidden" name="action" value="shweet«er">
+                        <input type='hidden' name='profil-origine-id' value=<?= $utilisateur->getId()?>>
                         <button class="btn btn-success px-4 py-1">Shwitter!!!</button>
                     </div>
                 </div>
