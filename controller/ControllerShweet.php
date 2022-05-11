@@ -8,7 +8,7 @@ class ControllerShweet extends Controller
     private UtilisateurModelRepository $utilisateurRepo;
     private AvatarModelRepository $avatarrepository;
     private ShweetModelRepository $ShweetRepo;
- 
+
 
     function __construct(ModelRepositoryConfig $config)
     {
@@ -16,17 +16,17 @@ class ControllerShweet extends Controller
         $this->avatarrepository = new AvatarModelRepository($config);
         $this->utilisateurRepo = new UtilisateurModelRepository($config, $this->avatarrepository);
         $this->ShweetRepo = new ShweetModelRepository($config, $this->avatarrepository, $this->utilisateurRepo);
-
     }
 
 
     function shweeter()
     {
         $texte = filter_input(INPUT_POST, 'texte', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $auteurid = 1;
+        $session =  $_SESSION['utilisateur'];
+        $auteurid = $session->getid();
         $parent_id = null;
-        
-        $this->ShweetRepo->insert($texte,$auteurid,$parent_id);
+
+        $this->ShweetRepo->insert($texte, $session->getId(), $parent_id);
 
         //$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
         $shweets = $this->ShweetRepo->selectDernierShweetParent($auteurid);
@@ -38,34 +38,75 @@ class ControllerShweet extends Controller
         $vue->assign("enfants", $shweetskids);
         $vue->assign("utilisateur", $User);
         echo $vue->render();
-        
-       
-
     }
 
-    
+
     function commenter()
     {
         $texte = filter_input(INPUT_POST, 'texte', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $auteurid = 1;
-        $parent_id = ($_REQUEST['parent_id']) ;
+        $origine = filter_input(INPUT_POST, 'profil-origine-id', FILTER_SANITIZE_NUMBER_INT);
+        $session =  $_SESSION['utilisateur'];
+        $auteurid = $session->getid();
+        $parent_id = ($_REQUEST['parent_id']);
 
-        $this->ShweetRepo->insert($texte,$auteurid,$parent_id);
+        $this->ShweetRepo->insert($texte, $auteurid, $parent_id);
 
-  
-        //$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-        $shweets = $this->ShweetRepo->selectDernierShweetParent($auteurid);
-        $shweetskids = $this->ShweetRepo->selectenfant();
-        $User = $this->utilisateurRepo->select($auteurid);
+        if ($origine == 0)
+        {
+            $shweets = $this->ShweetRepo->selectDernierShweetParent(0);
+            $shweetskids = $this->ShweetRepo->selectenfant();
 
-        $vue = new ViewCreator("view/accueil.phtml");
-        $vue->assign("shweets", $shweets);
-        $vue->assign("enfants", $shweetskids);
-        $vue->assign("utilisateur", $User);
-        echo $vue->render();
-        
+
+            $vue = new ViewCreator("view/accueil.phtml");
+            $vue->assign("shweets", $shweets);
+            $vue->assign("enfants", $shweetskids);
+            echo $vue->render();
+        }
+        else
+        {
+            $shweets = $this->ShweetRepo->selectDernierShweetParent($origine);
+            $shweetskids = $this->ShweetRepo->selectenfant();
+            $User = $this->utilisateurRepo->select($origine);
+
+            $vue = new ViewCreator("view/page.phtml");
+            $vue->assign("shweets", $shweets);
+            $vue->assign("enfants", $shweetskids);
+            $vue->assign("utilisateur", $User);
+            echo $vue->render();
+        }
     }
-    
+
+    function supprimer()
+    {
+        $shweet =  filter_input(INPUT_POST, 'shweet-id', FILTER_SANITIZE_NUMBER_INT);
+        $origine = filter_input(INPUT_POST, 'profil-origine-id', FILTER_SANITIZE_NUMBER_INT);
+
+        $this->ShweetRepo->delete($shweet);
+
+        if ($origine == 0)
+        {
+            $shweets = $this->ShweetRepo->selectDernierShweetParent(0);
+            $shweetskids = $this->ShweetRepo->selectenfant();
+
+
+            $vue = new ViewCreator("view/accueil.phtml");
+            $vue->assign("shweets", $shweets);
+            $vue->assign("enfants", $shweetskids);
+            echo $vue->render();
+        }
+        else
+        {
+            $shweets = $this->ShweetRepo->selectDernierShweetParent($origine);
+            $shweetskids = $this->ShweetRepo->selectenfant();
+            $User = $this->utilisateurRepo->select($origine);
+
+            $vue = new ViewCreator("view/page.phtml");
+            $vue->assign("shweets", $shweets);
+            $vue->assign("enfants", $shweetskids);
+            $vue->assign("utilisateur", $User);
+            echo $vue->render();
+        }
+    }
 
     function default()
     {
@@ -84,8 +125,5 @@ class ControllerShweet extends Controller
         $vue->assign("enfants", $shweetskids);
         $vue->assign("utilisateur", $User);
         echo $vue->render();
-
     }
-
-    
 }

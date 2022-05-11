@@ -1,6 +1,30 @@
+<?php 
+$session =  $_SESSION['utilisateur'];
+if(!isset($session))
+{
+
+?>
+
 <div id="menu"style="background-color: lightblue;">
     <h3>
         <a href="index.php?ctrl=Connexion&action=Connectmenu">Connexion</a>
         <a href="index.php?ctrl=Inscription&action=Inscriptionpanel">S'inscrire</a>
     </h3>
 </div>
+<?php
+}
+else
+{
+?>
+
+<div id="menu"style="background-color: lightblue;">
+    <h3>
+        <img src=' <?= $session->getAvatar()->getUrl()?>' alt='kevindelaval' width='50' height='50'>
+        <a href='index.php?ctrl=page&action=afficherProfil&id=<?= $session->getId() ?>'>Ma Page</a>
+        <a href="index.php?ctrl=Connexion&action=seDeconnecter">Deconnexion</a>
+    </h3>
+</div>
+<?php
+}
+
+?>

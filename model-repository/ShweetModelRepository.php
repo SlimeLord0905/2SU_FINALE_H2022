@@ -39,7 +39,7 @@ class ShweetModelRepository extends ModelRepository
     {
         if ($id != 0)
         {
-            $requete = $this->connexion->prepare("SELECT * FROM shweet WHERE auteur_id=:id LIMIT 20");
+            $requete = $this->connexion->prepare("SELECT * FROM shweet WHERE auteur_id=:id AND parent_id IS NULL LIMIT 20");
             $requete->bindValue(":id", $id);
             $requete->execute();
         }

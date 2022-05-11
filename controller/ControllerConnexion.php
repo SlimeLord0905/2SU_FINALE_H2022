@@ -13,6 +13,8 @@ class ControllerConnexion extends Controller
         parent::__construct($config);
         $this->avatarrepo = new AvatarModelRepository($config);
         $this->utilisateurRepo = new UtilisateurModelRepository($config, $this->avatarrepo);
+        $this->ShweetRepo = new ShweetModelRepository($config, $this->avatarrepo, $this->utilisateurRepo);
+
     }
 
     function seConnecter()
@@ -52,7 +54,11 @@ class ControllerConnexion extends Controller
     function seDeconnecter()
     {
         $this->detruireSession();
-        $vue = new ViewCreator('view/accueil.phtml');
+        $shweets = $this->ShweetRepo->selectDernierShweetParent(0);
+        $shweetskids = $this->ShweetRepo->selectenfant();
+        $vue = new ViewCreator("view/accueil.phtml");
+        $vue->assign("shweets", $shweets);
+        $vue->assign("enfants", $shweetskids);
         echo $vue->render();
     }
 

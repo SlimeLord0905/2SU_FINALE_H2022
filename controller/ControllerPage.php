@@ -20,6 +20,7 @@ class Controllerpage extends Controller
     function afficherProfil()
     {
         $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+        
         $shweets = $this->ShweetRepo->selectDernierShweetParent($id);
         $shweetskids = $this->ShweetRepo->selectenfant();
         $User = $this->utilisateurRepo->select($id);
