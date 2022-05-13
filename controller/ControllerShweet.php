@@ -26,11 +26,23 @@ class ControllerShweet extends Controller
         $session =  $_SESSION['utilisateur'];
         $auteurid = $session->getid();
         $parent_id = null;
-
-        $this->ShweetRepo->insert($texte, $session->getId(), $parent_id);
-
+        if (strlen($texte) != 0 && strlen($texte) <= 255)
+        {
+            if (isset($session))
+            {
+                $this->ShweetRepo->insert($texte, $session->getId(), $parent_id);
+            }
+            else
+            {
+                $erreurs[] = "Utilisateur non spécifier";
+            }
+        }
+        else
+        {
+            $erreurs[] = "le contenut du shweet:" . $texte . " doit être entre 0 et 255 charactères ";
+        }
         //$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-        
+
         $shweets = $this->ShweetRepo->selectDernierShweetParent($origine);
         $shweetskids = $this->ShweetRepo->selectenfant();
         $User = $this->utilisateurRepo->select($origine);
@@ -39,6 +51,7 @@ class ControllerShweet extends Controller
         $vue->assign("shweets", $shweets);
         $vue->assign("enfants", $shweetskids);
         $vue->assign("utilisateur", $User);
+        $vue->assign("erreurs", $erreurs);
         echo $vue->render();
     }
 
@@ -50,9 +63,21 @@ class ControllerShweet extends Controller
         $session =  $_SESSION['utilisateur'];
         $auteurid = $session->getid();
         $parent_id = ($_REQUEST['parent_id']);
-
-        $this->ShweetRepo->insert($texte, $auteurid, $parent_id);
-
+        if (strlen($texte) != 0 && strlen($texte) <= 255)
+        {
+            if (isset($session))
+            {
+                $this->ShweetRepo->insert($texte, $auteurid, $parent_id);
+            }
+            else
+            {
+                $erreurs[] = "Utilisateur non spécifier";
+            }
+        }
+        else
+        {
+            $erreurs[] = "le contenut du shweet:" . $texte . " doit être entre 0 et 255 charactères ";
+        }
         if ($origine == 0)
         {
             $shweets = $this->ShweetRepo->selectDernierShweetParent(0);
@@ -62,6 +87,7 @@ class ControllerShweet extends Controller
             $vue = new ViewCreator("view/accueil.phtml");
             $vue->assign("shweets", $shweets);
             $vue->assign("enfants", $shweetskids);
+            $vue->assign("erreurs", $erreurs);
             echo $vue->render();
         }
         else
@@ -74,6 +100,7 @@ class ControllerShweet extends Controller
             $vue->assign("shweets", $shweets);
             $vue->assign("enfants", $shweetskids);
             $vue->assign("utilisateur", $User);
+            $vue->assign("erreurs", $erreurs);
             echo $vue->render();
         }
     }
@@ -83,8 +110,14 @@ class ControllerShweet extends Controller
         $shweet =  filter_input(INPUT_POST, 'shweet-id', FILTER_SANITIZE_NUMBER_INT);
         $origine = filter_input(INPUT_POST, 'profil-origine-id', FILTER_SANITIZE_NUMBER_INT);
 
-        $this->ShweetRepo->delete($shweet);
-
+        if (isset($session))
+        {
+            $this->ShweetRepo->delete($shweet);
+        }
+        else
+        {
+            $erreurs[] = "Utilisateur non spécifier";
+        }
         if ($origine == 0)
         {
             $shweets = $this->ShweetRepo->selectDernierShweetParent(0);
