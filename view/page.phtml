@@ -37,20 +37,20 @@
                 </table>
             </div>
             <div class='border'></div>
-            <?php  if (isset($session) && $utilisateur->getId() == $session->getId())
-                    {?>
-            <form id="formulaireShweetter" method="post" action="index.php">
-                <div>
-                    <textarea name="texte" id="post-field" class="post-field" placeholder="Écris un Shweet!" minlength="1" maxlength="255" required=""></textarea>
+            <?php if (isset($session) && $utilisateur->getId() == $session->getId())
+            { ?>
+                <form id="formulaireShweetter" method="post" action="index.php">
                     <div>
-                        <input type="hidden" name="ctrl" value="shweet">
-                        <input type="hidden" name="action" value="shweet«er">
-                        <input type='hidden' name='profil-origine-id' value=<?= $utilisateur->getId()?>>
-                        <button class="btn btn-success px-4 py-1">Shwitter!!!</button>
+                        <textarea name="texte" id="post-field" class="post-field" placeholder="Écris un Shweet!" minlength="1" maxlength="255" required=""></textarea>
+                        <div>
+                            <input type="hidden" name="ctrl" value="shweet">
+                            <input type="hidden" name="action" value="shweet«er">
+                            <input type='hidden' name='profil-origine-id' value=<?= $utilisateur->getId() ?>>
+                            <button class="btn btn-success px-4 py-1">Shwitter!!!</button>
+                        </div>
                     </div>
-                </div>
-            </form>
-            <?php }?>
+                </form>
+            <?php } ?>
             <div class='border'></div>
             <?php
             $session =  $_SESSION['utilisateur'];
@@ -88,7 +88,7 @@
                                                 <p>" . $enfant->gettexte() . "</p>";
                         if (isset($session) && $shweet->getAuteur()->getId() == $session->getId())
                         {
-                                           echo"<form method='post' action='index.php'>
+                            echo "<form method='post' action='index.php'>
                                                     <input type='submit' class='btn btn-link' value='Supprimer'>
                                                     <input type='hidden' name='shweet-id' value=" . $enfant->getId() . ">
                                                     <input type='hidden' name='ctrl' value='shweet'>
@@ -96,27 +96,31 @@
                                                     <input type='hidden' name='profil-origine-id' value=" . $utilisateur->getId() . ">
                                                 </form>";
                         }
-                                       echo"</div>
+                        echo "</div>
                                             <hr style='border: 1px dashed black;'>";
                     }
                 }
                 echo "
-                                 </div>
-                                    <form class='comment-form' method='post' action='index.php'>
-                                        <div class='post-comment' align='right'>
-                                            <img src='".$session->getAvatar()->getUrl()."' alt='kevindelaval' width='50' height='50'>
-                                            <input type='text' class='form-control' name='texte' placeholder='Répondre...' minlength='1' maxlength='255' required=''>
-                                            <input type='hidden' name='parent_id' value=" . $shweet->getId() . ">
-                                            <input type='hidden' name='ctrl' value='shweet'>
-                                            <input type='hidden' name='action' value='commenter'>
-                                            <input type='hidden' name='profil-origine-id' value=" . $utilisateur->getId() . ">
-                                            <button class='btn btn-success px-4 py-1'>Commenter</button>
-                                        </div>
-                                    </form>
-                                 <div class='border'></div>
-                            </div>
-                        </div>
-                    ";
+                </div>";
+                if (isset($session))
+                {
+                    echo "  <form class='comment-form' method='post' action='index.php'>
+                       <div class='post-comment' align='right'>
+                           <img src='" . $session->getAvatar()->getUrl() . "' alt='kevindelaval' width='50' height='50'>
+                           <input type='text' class='form-control' name='texte' placeholder='Répondre...' minlength='1' maxlength='255' required=''>
+                           <input type='hidden' name='parent_id' value=" . $shweet->getId() . ">
+                           <input type='hidden' name='ctrl' value='shweet'>
+                           <input type='hidden' name='action' value='commenter'>
+                           <input type='hidden' name='profil-origine-id' value='0'>
+                           <button class='btn btn-success px-4 py-1'>Commenter</button>
+                       </div>
+                   </form>";
+                }
+                echo "
+                <div class='border'></div>
+           </div>
+       </div>
+   ";
             }
             ?>
         </div>
